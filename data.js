@@ -270,3 +270,7 @@ var ListEmployee = [
         Description: 'Mô tả chi tiết nhân viên'
     }
 ];
+
+var summaryData = {
+    Salary: 12000000
+};

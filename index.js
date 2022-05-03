@@ -26,6 +26,8 @@ class DataTable{
          me.colums = me.getColumnOptions();
          // Các bản ghi
          me.items = [];
+         // Dữ liệu summary
+         me.summaryData = {};
     }
 
     // Lấy các cột
@@ -34,6 +36,7 @@ class DataTable{
             datatable = me.datatable,
             columns = [],
             totalWidth = 0,
+            summary = false,
             columnOption = {
                 type: 'String',
                 field: null,
@@ -41,6 +44,7 @@ class DataTable{
                 enum: null,
                 class: null,
                 index: null,
+                summary: false,
                 text: ''
             };
 
@@ -62,12 +66,14 @@ class DataTable{
 
             // Tính tổng width
             totalWidth += parseInt(column.width);
+            summary = column.summary || summary;
 
             columns.push(column);
         });
 
         // Lưu lại tổng độ dài
         me.totalWidth = totalWidth;
+        me.options.summary = summary;
 
         return columns;
     }
@@ -90,6 +96,11 @@ class DataTable{
 
         // Thực hiện vẽ phần body
         me.drawBodyTable();
+
+        // Thực hiện vẽ dòng summary
+        if(me.options.summary){
+            me.drawSummaryTable();
+        }
 
         // Nếu chưa có paging thì vẽ
         if(!me.paging && me.options.paging){
@@ -117,10 +128,11 @@ class DataTable{
         if(me.colums && me.colums.length > 0){
             // Duyệt từng header để vẽ
             me.colums.filter(function(item, index){
-                let headerItem = $(`<div class="header-item"></div>`);
+                let headerItem = $(`<div class="header-item"></div>`),
+                    classStyle = me.getClassCell(item);
 
                 headerItem.text(item.text);
-                headerItem.addClass(item.class || '');
+                headerItem.addClass(classStyle);
                 headerItem.width(item.width);
                 headerItem.attr("column-index", index + 1);
                 headerItem.attr("title", item.text);
@@ -173,6 +185,39 @@ class DataTable{
 
                 // Thực hiện append row vừa vẽ
                 me.datatable.find(".table-content_body").append(rowItem);
+            });
+        }
+    }
+
+    // Thực hiện vẽ summary
+    drawSummaryTable(){
+        let me = this,
+            summaryWrapper = $(`<div class="table-content_summary"></div>`);
+
+         // Nếu chưa có phần binding summary thì thêm thẻ bao
+         if(me.datatable.find(".table-content_summary").length == 0){
+            me.datatable.find(".table-content").append(summaryWrapper);
+        }else{
+            me.datatable.find(".table-content_summary").empty();
+        }
+
+        // Thực hiện binding summary
+        if(me.summaryData){
+            me.colums.filter(function(item, indexColumn){
+                let summaryItem = $("<div class='summary-item'></div>");
+
+                summaryItem.attr("column-index", indexColumn + 1);
+                summaryItem.addClass("align-right");
+                summaryItem.width(item.width);
+
+                if(item.summary){
+                    let value = me.getValueCell(me.summaryData, item);
+
+                    summaryItem.attr("title", value);
+                    summaryItem.text(value);
+                }
+
+                me.datatable.find(".table-content_summary").append(summaryItem);
             });
         }
     }
@@ -230,6 +275,7 @@ class DataTable{
         let me = this;
 
         me.items = ListEmployee;
+        me.summaryData = summaryData;
 
         // Thực hiện vẽ table
         me.drawTable();
