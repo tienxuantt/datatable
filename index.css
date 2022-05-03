@@ -1,0 +1,157 @@
+#gridEmployee {
+    height: 600px;
+    width: 1300px;
+    margin: 100px auto;
+    border: 1px solid #d1cece;
+}
+
+.table-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.table-paging {
+    height: 40px;
+    width: 100%;
+    padding: 0 10px;
+    line-height: 40px;
+}
+
+.scroll-bar-y {
+    position: absolute;
+    width: 10px;
+    right: 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.scroll-bar-content {
+    height: 800px;
+    width: 100%;
+}
+
+.table-content {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-row {
+    height: 100%;
+    display: flex;
+    /* width: 2736px; */
+}
+
+.header-item {
+    border-right: 1px solid #e9e9e9;
+    padding-right: 10px;
+    padding-left: 10px;
+    line-height: 40px;
+white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;box-sizing: border-box;}
+
+.table-content_header {
+    height: 40px;
+    /* width: 2736px; */
+    border-bottom: 1px solid #d1cece;
+    background: #f5f5f5;
+    font-weight: bold;
+    color: #3e3d3d;
+}
+
+.table-content_body {
+    flex: 1;
+    /* width: 2736px; */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.table-content_summary {
+    height: 35px;
+    width: 2736px;
+    border-top: 1px solid #d1cece;
+    border-bottom: 1px solid #d1cece;
+    padding: 0 10px;
+    background: #f5f5f5;
+    line-height: 34px;
+}
+
+.row-item {
+    height: 40px;
+    display: flex;
+    border-top: 1px solid #e9e9e9;
+    box-sizing: border-box;
+}
+
+.table-content_body .selected-row {
+    background: #d1edf4;
+}
+
+.row-item:hover {
+    background: #d1edf4;
+    cursor: pointer;
+}
+
+.cell-item {
+    height: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-right: 1px solid #e9e9e9;
+    padding: 0 10px;
+    line-height: 40px;
+box-sizing: border-box;}
+
+.row-item:first-child {
+    border-top: none;
+}
+
+/* Fix tam */
+.table-content_body,
+.table-content_summary,
+.table-content_header,
+.table-paging {
+    box-sizing: border-box;
+}
+
+.table-content_body {
+    border-top: none;
+    border-bottom: none;
+}
+
+.table-paging {
+    border-top: none;
+}
+
+/* end Fix tam */
+
+/* style scroll */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #d6d6d6;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #c4c4c4;
+}
+
+::-webkit-scrollbar {
+    height: 7px;
+    width: 7px;
+}
+
+.table-content_body::-webkit-scrollbar {
+    height: 0px;
+    width: 0px;
+}
+
+/* end style scroll */
